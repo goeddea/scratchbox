@@ -9,7 +9,7 @@
       Shared Web Worker Test Page 1
    </p>
    <p>
-      Setting 'persistent = true;'
+      Set 'persistent = true;'
    </p>
    <p>
       <a href="page_02.html">Load page 2</a>
@@ -21,6 +21,7 @@
          console.log(e.data);
       }, false);
 
+      // call start before posting
       worker.port.start();
 
       // post a message to the shared web worker

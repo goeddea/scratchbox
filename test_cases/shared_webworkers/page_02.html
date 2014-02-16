@@ -9,7 +9,7 @@
       Shared Web Worker Test Page 2
    </p>
    <p id="persistent">
-      reading persistent
+      reading 'persistent'
    </p>
 
    <script>
@@ -20,6 +20,7 @@
          document.getElementById("persistent").innerHTML = "'persistent' = " + e.data;
       }, false);
 
+      // call start before posting
       worker.port.start();
 
       // post a message to the shared web worker
