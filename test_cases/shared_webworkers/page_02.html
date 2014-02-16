@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <title>Page 2</title>
+</head>
+<body>
+   <p>
+      Shared Web Worker Test Page 2
+   </p>
+   <p id="persistent">
+      reading persistent
+   </p>
+
+   <script>
+      var worker = new SharedWorker("worker.js");
+
+      worker.port.addEventListener("message", function(e) {
+         console.log(e.data);
+         document.getElementById("persistent").innerHTML = "'persistent' = " + e.data;
+      }, false);
+
+      worker.port.start();
+
+      // post a message to the shared web worker
+      worker.port.postMessage("readPersistent");
+   </script>
+</body>
+</html>
