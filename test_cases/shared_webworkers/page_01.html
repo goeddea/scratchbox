@@ -15,6 +15,7 @@
       <a href="page_02.html">Load page 2</a>
    </p>
    <script>
+      // console.log("anything happening?")
       var worker = new SharedWorker("worker.js");
 
       worker.port.addEventListener("message", function(e) {
@@ -26,6 +27,7 @@
 
       // post a message to the shared web worker
       worker.port.postMessage("setPersistent");
+
    </script>
 </body>
 </html>

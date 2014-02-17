@@ -17,7 +17,7 @@
 
       worker.port.addEventListener("message", function(e) {
          console.log(e.data);
-         document.getElementById("persistent").innerHTML = "'persistent' = " + e.data;
+         document.getElementById("persistent").innerHTML = e.data;
       }, false);
 
       // call start before posting
