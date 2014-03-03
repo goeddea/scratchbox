@@ -5,21 +5,30 @@
    <title>Page 1</title>
 </head>
 <body>
-   <p>
+   <h1>
       Shared Web Worker Test Page 1
+   </h1>
+   <p id="persistent">
+      Setting 'persistent' = 'true;'
    </p>
-   <p>
-      Set 'persistent = true;'
+   <p id="wsCounter">
+      Trying to start WebSocket heartbeat.
    </p>
    <p>
       <a href="page_02.html">Load page 2</a>
    </p>
    <script>
       // console.log("anything happening?")
-      var worker = new SharedWorker("worker.js");
+      var worker = new SharedWorker("worker.js"),
+          wsCounter = document.getElementById("wsCounter");
 
       worker.port.addEventListener("message", function(e) {
          console.log(e.data);
+         if(typeof(e.data) === "number") {
+            wsCounter.innerHTML = "Received WebSocket message with counter " + e.data;
+         } else {
+            document.getElementById("persistent").innerHTML = "'persistent' set to '" + e.data + "'";
+         }
       }, false);
 
       // call start before posting

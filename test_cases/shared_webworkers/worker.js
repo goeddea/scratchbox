@@ -1,25 +1,41 @@
-var persistent = false;
-var has_websocket = 'WebSocket' in this;
+var persistent = false,
+    has_websocket = 'WebSocket' in this,
+    session = null,
+    counter = 0,
+    ports = [];
 
 self.addEventListener("connect", function (e) {
    var port = e.ports[0];
+   port.start();
 
    port.addEventListener("message", function (e) {
+      
       if(e.data === "setPersistent") {
 
          persistent = true;
-         port.postMessage("'persistent'  set to " + persistent);
+         port.postMessage(persistent);
 
-         port.postMessage("sharedWorker has WS: " + has_websocket);
+         if(session === null) {
+            session = new WebSocket('ws://127.0.0.1:9000/');
+            setInterval(function(){
+               session.send(counter);
+               counter += 1;
+            }, 1000);
+         }       
+
+         session.onmessage = function(msg) { port.postMessage(parseInt(msg.data, 10)); };
 
       } else if (e.data === "readPersistent") {
 
-         port.postMessage("'persistent'  is " + persistent);
+         port.postMessage(persistent);
+         
+         session.addEventListener("message", function(msg) { port.postMessage(parseInt(msg.data, 10)); });
 
       }
    }, false);
 
-   port.start();
+   
+
 
 }, false);
 
