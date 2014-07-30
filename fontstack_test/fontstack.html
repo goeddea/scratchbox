@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <title>Fonttest</title>
+   <link rel="stylesheet" href="fontstack.css">
+</head>
+<body>
+   
+   <h1>This is a first level heading</h1>
+   
+   <p>
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+   </p>
+
+   <h2>
+      Second level heading
+   </h2>
+
+   <p>
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+   </p>
+
+   <h3>
+      Third level heading, just to be complete
+   </h3>
+
+   <p>
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+   </p>
+
+   
+   <button id="native" onclick="changeFontStack('native')">Native Font Stack</button>
+   <button id="openSans" onclick="changeFontStack('openSans')">Open Sans (Web font)</button>
+   <button id="sourceSans" onclick="changeFontStack('sourceSans')">Source Sans Pro (Web font)</button>
+
+   <script>
+      function changeFontStack (stack) {
+         switch (stack) {
+            case "native":
+               document.body.setAttribute("class", "native");
+               break;
+            case "openSans":
+               document.body.setAttribute("class", "openSans");
+               break;
+            case "sourceSans":
+               document.body.setAttribute("class", "sourceSans");
+               break;
+         }
+
+         var buttons = document.getElementsByTagName("button");
+         for (var i = 0; i < buttons.length; i++) {
+            buttons[i].classList.remove("selected");
+         }
+         document.getElementById(stack).classList.add("selected");
+
+      }
+   </script>
+</body>
+</html>
