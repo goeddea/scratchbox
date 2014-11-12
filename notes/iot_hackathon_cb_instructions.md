@@ -93,7 +93,7 @@ connection.open();
 
 (untested)
 The `autobahn` npm package does not seem to run on Tessel. 
-For this reason, `XXXXXXX` has created a minimalist version which has less features (but enough for most use cases). This is `wamp-tessel` (CHECKME!!!) - so install this instead.
+For this reason, GitHub user `mykwillis` has created a minimalist version which has less features (but enough for most use cases). This is `wamp-tessel`- so install this instead.
 
 Instead of 
 
@@ -133,16 +133,6 @@ Realms are routing domains - messages are only transmitted within a single realm
 * [ ] `ms_iot_hack_15`
 * [ ] `ms_iot_hack_16`
 
+## Questions?
 
-to do:
-
-[ ] set up CB instance locally
-   [x] runs votes demo with python backend (so people can see and get working code via the console)
-   [x] has the above realms configured
-[x] test instance
-[x] test cross-realm isolation working
-[ ] copy the configuration to azure instance
-[ ] add port 80 to config
-[ ] test this
-[ ] set up this page on my scratchbox wiki
-    
+Talk to Tobias or Alex (the guys with the Crossbar.io shirts).  
