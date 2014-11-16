@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <link rel="shortcut icon" href="img/favicon.ico">
+   <title>Vote</title>
+   <link rel="stylesheet" href="css/vote.css">
+</head>
+<body>
+
+   <header>
+      <div id="header_inner">
+         <div id="demo_title">
+            <span>Alarm</span>
+         </div>
+         <a class="navbar-brand" href="/">
+            <img src="img/crossbar_icon_inverted.png" alt="crossbar logo inverted" width="60" height="60">
+            <span class="fontFace">
+               <span>Crossbar</span><span>.io</span>
+            </span>
+         </a>
+      </div>
+   </header>
+
+   <div id="demo_body">
+
+      <div class="alarmArmedIndicator" data-bind="style: { backgroundColor: isArmed() ? 'red' : 'green' }">
+         
+      </div>
+
+      <div class="alarmContainer">
+         <div class="alarm"  data-bind="visible: isActive">
+            Alarm!!!
+         </div>   
+      </div>
+      
+
+      <div class="armament">
+     <!-- s -->
+         <button data-bind="visible: !isArmed(), click: arm">
+            Arm
+         </button>
+         <button data-bind="visible: isArmed(), click: disarm">
+            Disarm
+         </button>
+      </div> 
+
+      <div class="imageContainer">
+         <img data-bind="attr: { src: currentImage }"> 
+      </div>
+
+      <button id="requestImage" data-bind="click: requestImage">
+         Request Image
+      </button>
+
+      <div class="alarmActions" data-bind="visible: isActive">
+         <button id="cancelAlarm"  data-bind="click: cancelAlarm">
+            Cancel Alarm
+         </button>
+      </div>
+
+      <div class="trigger">
+         <button data-bind="click: triggerAlarm, visible: !isActive()">
+            Trigger Alarm
+         </button>
+      </div>    
+      
+      
+   </div>
+
+   <script>AUTOBAHN_DEBUG = true;</script>
+   <script src="js/autobahn.min.js"></script>
+   <script src="js/knockout-3.1.0.js"></script>
+   <script src="js/frontend.js"></script>
+
+</body>
+</html>
