@@ -14,7 +14,7 @@
 
 // our default config which connects to our demo instance
 var config = {
-    routerUrl: 'wss://demo.crossbar.io',
+    routerUrl: 'wss://demo.crossbar.io/ws',
     realm: 'startify_01',
     deviceId: 'myyun',
     devicePort: '/dev/ttyATH0'
