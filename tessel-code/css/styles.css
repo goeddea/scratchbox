@@ -48,8 +48,9 @@ header {
 #header_inner
 {
    position: relative;
-   min-width: 960px;
-   max-width: 64%;
+   /* min-width: 960px; */
+   width: 100%;
+   /* max-width: 64%; */
    height: 100%;
    margin:auto;
    padding: 0;
@@ -59,13 +60,14 @@ header {
 
 #demo_title
 {
-   font-size: 27px;
+   font-size: 19px;
    font-weight: bold;
    color: rgb(95, 95, 95);
    display: inline-block;
    text-align: right;
    line-height: 11px;
    padding-top: 32px;
+   padding-right: 5px;
 }
 #demo_title > span
 {
@@ -73,7 +75,7 @@ header {
 }
 #demo_title > span:first-child
 {
-   font-size: 45px;
+   font-size: 35px;
    line-height: 38px;
 }
 
@@ -81,7 +83,7 @@ header {
     position: absolute;
 
     top: 21px;
-    left: 0px;
+    left: 10px;
     text-decoration: none;
 }
 
@@ -91,6 +93,7 @@ header {
    top: -13px;
    text-decoration: none;
    border: none;
+   display: none;
 }
 
 .navbar-brand > span > span:first-of-type {
@@ -104,24 +107,9 @@ header {
   color: rgb(240, 240, 240);
 }
 
-.demo_links
+#demo_body
 {
-   text-align: center;
-}
-.demo_links > div > a
-{
-   padding: 0 2em 0 0;
-   font-size: 19px;
-   text-decoration: none;
-   color: #f60;
-   color: #d0b800;
-}
-
-
-#demo_body,
-.demo_links
-{
-   width: 850px;
+/*    width: 850px; */
    height: 100%;
    margin: 0em auto 2em;
    position: relative;
@@ -138,57 +126,6 @@ header {
    cursor: default;
 }
 
-
-
-#voteContainer
-{
-
-   text-align: center;
-}
-#voteContainer > div
-{
-   display: inline-block;
-   width: 16em;
-}
-#voteContainer > div > img
-{
-  box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.3);
-}
-
-#voteContainer > div > span
-{
-    display: block;
-
-    margin: 1em 0 0;
-    font-size: 21px;
-    text-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
-}
-
-#voteContainer > div > div
-{
-    display: inline-block;
-
-
-}
-#voteContainer > div > div > input
-{
-
-    width: 4em;
-    text-align: center;
-    border: none;
-    background-color: #fafafa;
-    font-size: 4em;
-    padding: 20px 0 30px;
-
-    transition: all 0.3s ease;
-    text-shadow: 0 0 7px rgba(0, 0, 0, 0.2);
-}
-
-
-#voteContainer > div > button
-{
-
-}
 
 button
 {
@@ -208,16 +145,9 @@ button:hover
     box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.4);
 }
 
-#resetVotesContainer
-{
-    text-align: center;
-
-    margin: 3em 0 0 0;
-}
-
 #demo_body
 {
-   width: 823px;
+   /* width: 823px; */
    text-align: center;
 }
 
@@ -311,3 +241,4 @@ button:hover
 .trigger {
   margin-top: 1em;
 }
+

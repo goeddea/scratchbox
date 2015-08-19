@@ -9,6 +9,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "accel-mma84": "^0.2.3",
+    "autobahn": "^0.9.5",
+    "camera-vc0706": "^0.1.6",
     "wamp-tessel": "^0.1.0"
   }
 }

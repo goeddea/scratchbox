@@ -30,8 +30,7 @@ function main () {
    // the WAMP connection to the Router
    //
    var connection = new autobahn.Connection({
-      url: "ws://191.233.97.96/ws",
-      // url: "ws://191.233.97.96:8080",
+      url: "ws://192.168.1.134:8080/ws",
 
       realm: "ms_iot_hack_01"
       // realm: "realm1"
@@ -45,7 +44,13 @@ function main () {
 
       session = sess;
 
-      session.publish("io.crossbar.iot.hack.camera", ["camera_ready"]);
+      session.publish("io.crossbar.iotberlin.alarmapp.cameralog", ["camera_ready"]);
+
+      // send publishes to keep wifi alive (testing)
+      // setInterval(function() {
+      //    session.publish("io.crossbar.iotberlin.alarmapp.keepalive");
+      //    console.log("keepalive sent");
+      // }, 1000);
 
             
       function takePicture () {
@@ -53,13 +58,14 @@ function main () {
          var t0 = Date.now();
 
          console.log("takePicture called");
-         // session.publish("io.crossbar.iot.hack.camera", ["takePicture called"]);
+         session.publish("io.crossbar.iotberlin.alarmapp.cameralog", ["takePicture called"]);
 
          var cameraResult = when.defer();
 
          camera.takePicture(function (err, image) {
 
             console.log("picture taken", Date.now() - t0);
+            session.publish("io.crossbar.iotberlin.alarmapp.cameralog", ["picture taken", Date.now() - t0]);
             
             // notification LED on for two seconds
             // notificationLED.high();
@@ -75,11 +81,13 @@ function main () {
                // need to encode image before sending
                try {
                   console.log("starting encoding", Date.now() - t0);
+                  session.publish("io.crossbar.iotberlin.alarmapp.cameralog", ["encoding started", Date.now() - t0]);
                   // var encodedImage = new Buffer(image).toString("hex");
                   // var encodedImage = new Buffer(image).toString("base64");
                   var encodedImage = image.toString("hex");
 
                   console.log("encoding ended", Date.now() - t0);
+                  session.publish("io.crossbar.iotberlin.alarmapp.cameralog", ["encoding finished", Date.now() - t0]);
                   cameraResult.resolve(encodedImage);
                   // cameraResult.resolve("hallo");
                } catch (e) {
@@ -100,9 +108,9 @@ function main () {
       //    return true;
       // }
 
-      session.register("io.crossbar.hack.take_picture", takePicture).then(
+      session.register("io.crossbar.iotberlin.alarmapp.take_picture", takePicture).then(
          function (registration) {
-            console.log("Procedure 'io.crossbar.hack.take_picture' registered:", registration.id);
+            console.log("Procedure 'io.crossbar.iotberlin.alarmapp.take_picture' registered:", registration.id);
          },
          function (error) {
             console.log("Registration failed:", error);

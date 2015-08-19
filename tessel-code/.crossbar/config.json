@@ -1,0 +1,62 @@
+
+{
+   "controller": {
+   },
+   "workers": [
+      {
+         "type": "router",
+         "realms": [
+            {
+               "name": "ms_iot_hack_01",
+               "roles": [
+                  {
+                     "name": "anonymous",
+                     "permissions": [
+                        {
+                           "uri": "*",
+                           "publish": true,
+                           "subscribe": true,
+                           "call": true,
+                           "register": true
+                        }
+                     ]
+                  }
+               ]
+            }
+         ],
+         "transports": [
+            {
+               "type": "web",
+               "endpoint": {
+                  "type": "tcp",
+                  "port": 8080
+               },
+               "paths": {
+                  "/": {
+                     "type": "static",
+                     "directory": ".."
+                  },
+                  "ws": {
+                     "type": "websocket",
+                     "options": {
+                        "require_websocket_subprotocol": false   
+                     }                     
+                  }
+               }
+            }
+         ]
+      },
+      {
+         "type": "guest",
+         "executable": "C:/Program Files (x86)/nodejs/node.exe",
+         "arguments": ["backend.js"],
+         "options": {
+            "workdir": "../node",
+            "watch": {
+               "directories": ["../node"],
+               "action": "restart"
+            }
+         }
+      }      
+   ]
+}

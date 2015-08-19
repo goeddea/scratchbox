@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+   <body>
+      <h1>Arduino Yun Serial to WAMP Bridge Test</h1>
+
+
+      <p>
+         Turn the red LED (pin 13) on the Yun itself on/off
+      </p>
+      <button id="ledOn">On</button>
+      <button id="ledOff">Off</button>
+
+      <p>
+         Trigger the LED via a button connected to the Yun?
+      </p>
+      <p>
+         Yes <input type="checkbox" id="useButtonAsTrigger">
+      </p>
+
+      <p>
+         Button is currently <strong id="buttonOn">off</strong>.
+      </p>
+
+      <p>
+         Open JavaScript console to see output.
+      </p>
+      <p>
+         Edit JavaScript to fit your setup.
+      </p>
+
+      
+      <!--<script>AUTOBAHN_DEBUG = true;</script>-->
+      
+      <!-- download and replace with local link for purely local development -->
+      <script src="http://autobahn.s3.amazonaws.com/autobahnjs/latest/autobahn.min.jgz"></script>
+      
+
+      <script>
+
+         // var base_uri = "io.crossbar.startify.";
+         var base_uri = "io.crossbar.examples.yun.myyun.firmata.";
+
+
+         // the WAMP connection to the Router
+         //
+         var connection = new autobahn.Connection({
+            url: "wss://demo.crossbar.io/ws",
+            realm: "startify_01"  // adjust this to the realm you've been assigned
+         });
+
+         connection.onopen = function (new_session, details) {
+            console.log("Connected", details);
+            
+            session = new_session;
+
+            // set LED pin
+
+            session.call(base_uri + "set_mode", [13, "out"]).then(
+               function () {
+                  console.log("ok, pin mode set");
+               },
+               function (err) {
+                  console.log(err);
+               }
+            );
+
+            function toggleLed (evt) {
+               var led_state = evt.target.id === "ledOn" ? true : false;
+
+               session.call(base_uri + "digital_write", [13, led_state, false]).then(
+                  function () {
+                     console.log("set LED state", led_state);
+                  },
+                  function (err) {
+                     console.log(err);
+                  }
+               );
+            };
+
+            // wire the on-screen buttons for turning on/off
+            document.getElementById("ledOn").addEventListener("click", toggleLed);
+            document.getElementById("ledOff").addEventListener("click", toggleLed);
+
+            // hardware button handling
+
+            var buttonOn = document.getElementById("buttonOn");
+            var useButtonAsTrigger = document.getElementById("useButtonAsTrigger");
+
+            function handleButton (args) {
+
+               var pin = args[0];
+               var old_value = args[1];
+               var new_value = args[2];
+               
+               // console.log("button analog change", pin, old_value, new_value);   
+
+               if (new_value > 500) {
+                  // console.log("button is pressed");
+
+                  buttonOn.innerHTML = "on";
+
+                  if (useButtonAsTrigger.checked) {
+                     session.call(base_uri + "digital_write", [13, true, false])
+                  }
+ 
+
+               } else {
+                  // console.log("button is not pressed");
+
+                  buttonOn.innerHTML = "off";
+
+                  if (useButtonAsTrigger.checked) {
+                     session.call(base_uri + "digital_write", [13, false, false])
+                  }
+               }
+
+            }
+
+            // set mode to watch
+
+            session.call(base_uri + "set_mode", [0, "watch"]).then(
+               function () {
+                  console.log("ok, pin mode set");
+
+                  // you can read from a watched pin!
+                  session.call(base_uri + "analog_read", [0]).then(
+                     function (args) {
+                        console.log("got analog value", args);
+                        handleButton(args)
+                     },
+                     function (err) {
+                        console.log(err);
+                     }
+                  );
+               },
+               function (err) {
+                  console.log(err);
+               }
+            );
+
+            // receive changes from analog watched pins
+            function on_analog_changed (args) {
+               var pin = args[0];
+               var old_value = args[1];
+               var new_value = args[2];
+
+               if (pin === 0) {
+                  handleButton(args);
+               } else {
+                  console.log("non-button analog change", pin, old_value, new_value);   
+               }               
+            }
+            session.subscribe(base_uri + "on_analog_changed", on_analog_changed);
+
+         };
+
+         connection.onclose = function (reason, details) {
+            console.log("Connection lost", reason, details);
+            session = null;
+         }
+
+         connection.open();
+      </script>
+   </body>
+</html>
