@@ -49,3 +49,13 @@ As a streaming service user I want to be able to control the music from any of t
 - sync method
     - try broadcast channel first
 
+------------------
+# practicals
+
+start the ssh-agent in the background
+$ eval `ssh-agent -s`
+> Agent pid 59566
+
+$ ssh-add ~/.ssh/id_ed25519
+
+python -m http.server
