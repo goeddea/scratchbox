@@ -58,3 +58,30 @@ var onBroadcastEvent = function(event) {
 
 channel.onmessage = onBroadcastEvent;
 
+
+
+let playButtons = document.getElementsByClassName("js-button-play")
+
+Array.prototype.forEach.call(playButtons, function(playButton) {
+    playButton.addEventListener("click", function() {
+        if (playButton.classList.contains("is-paused")) {
+            player.play()
+        } else {
+            player.pause()
+        }
+    })
+})
+
+player.addEventListener("play", function(event) {
+    Array.prototype.forEach.call(playButtons, function(playButton) {
+        playButton.classList.remove("is-paused")
+        playButton.children[0].textContent = "pause_circle"
+    })
+})
+
+player.addEventListener("pause", function(event) {
+    Array.prototype.forEach.call(playButtons, function(playButton) {
+        playButton.classList.add("is-paused")
+        playButton.children[0].textContent = "play_circle"
+    })
+})
