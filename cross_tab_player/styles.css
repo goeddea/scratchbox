@@ -16,14 +16,14 @@ h1 {
 
 /* Layout */
 
-.container {
+.l-container {
     width: 1000px;
     margin-left: auto;
     margin-right: auto;
 }
 
 /* Components */
-.player-ui {
+.c-player-ui {
     position: fixed;
     bottom: 0;
     left: 0;
@@ -35,29 +35,28 @@ h1 {
     padding: 0.5rem 1rem;
 }
 
-.player-ui .button {
+.c-player-ui .c-button {
     padding: 0;
     background: transparent;
     border: 0 none;
 }
-.player-ui .button .material-icons {
+.c-player-ui .c-button .material-icons {
     font-size: 6rem;
 }
 
-
 /* Themes */
 
-.player-ui {
+.c-player-ui {
     background: rgba(0, 0, 0, 0.05);
 }
 
-.player-ui .button {
+.c-player-ui .c-button {
     color: #ff8800;
 }
 
-.player-ui .button:hover,
-.player-ui .button:focus,
-.player-ui .button:active {
+.c-player-ui .c-button:hover,
+.c-player-ui .c-button:focus,
+.c-player-ui .c-button:active {
     color: #db7900;
 }
 
