@@ -1,0 +1,63 @@
+/* Base */
+
+html {
+    font-family: sans-serif;
+    font-size: 10px;
+}
+
+main {
+
+}
+
+h1 {
+    text-transform: capitalize;
+}
+
+
+/* Layout */
+
+.container {
+    width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Components */
+.player-ui {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    display: flex;
+    justify-content: center;
+
+    padding: 0.5rem 1rem;
+}
+
+.player-ui .button {
+    padding: 0;
+    background: transparent;
+    border: 0 none;
+}
+.player-ui .button .material-icons {
+    font-size: 6rem;
+}
+
+
+/* Themes */
+
+.player-ui {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.player-ui .button {
+    color: #ff8800;
+}
+
+.player-ui .button:hover,
+.player-ui .button:focus,
+.player-ui .button:active {
+    color: #db7900;
+}
+
