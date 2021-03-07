@@ -16,12 +16,15 @@ console.log("tabId", tabID);
 
 const channel = new BroadcastChannel('player');
 
-channel.postMessage({
-    source: tabID,
-    type: "hello",
-    helloTime: Date.now()
-})
+var sendHello = function() {
 
+    channel.postMessage({
+        source: tabID,
+        type: "hello",
+        helloTime: Date.now()
+    })
+}
+sendHello();
 
 
     // basic event broadcasting
@@ -63,14 +66,15 @@ var onBroadcastEvent = function(event) {
     if(event.data.source == tabID) {
         return;
     }
-    console.log('received broadcast event', event.data.type);
+    // console.log('received broadcast event', event.data.type);
     switch (event.data.type) {
         case 'timeupdate':
             externalTimeUpdate = true;
             updateCounter += 1;
             timeSinceLoad = Date.now() - loadTime;
-            console.log(updateCounter, timeSinceLoad / 1000);
+            // console.log(updateCounter, timeSinceLoad / 1000);
             // player.currentTime = event.data.playTime // does not set the (displayed) time
+            break;
 
         case 'hello':
             console.log("received 'hello'", event.data.source)
@@ -81,12 +85,14 @@ var onBroadcastEvent = function(event) {
                 helloTime: event.data.helloTime,
                 helloBackTime: Date.now()
             })
+            break;
         
         case 'helloBack':
             if(event.data.target == tabID) {
                 console.log('received "helloBack" from', 
                     event.data.source, "helloReceive", event.data.helloBackTime - event.data.helloTime, "helloBackReceive", Date.now() - event.data.helloBackTime);
             }
+            break;
             
     }
 

@@ -49,6 +49,24 @@ As a streaming service user I want to be able to control the music from any of t
 - sync method
     - try broadcast channel first
 
+### Shared Worker
+
+- on tab load
+    - get or create shared worker
+    - if get --> get state
+- state model
+    - player tab (if currently playing)
+    - playlist
+    - present position in playlist
+    - present position in present track
+    - play state (play/pause/stopped)  
+
+
+- player tab
+    - on play --> present tab / tab in which the action occured
+    - on track change --> in focus tab
+
+
 ------------------
 # practicals
 
