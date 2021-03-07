@@ -55,6 +55,7 @@ As a streaming service user I want to be able to control the music from any of t
     - get or create shared worker
     - if get --> get state
 - state model
+    - tabs (array)
     - player tab (if currently playing)
     - playlist
     - present position in playlist
@@ -65,6 +66,15 @@ As a streaming service user I want to be able to control the music from any of t
 - player tab
     - on play --> present tab / tab in which the action occured
     - on track change --> in focus tab
+
+- localStorage (for state persistence)
+    - periodically write state (to have state in case the browser crashes) --> JS in a tab needs to do this --> first tab in tabs (array)
+    - write state on last tab closed
+
+
+### Local Storage
+
+- 
 
 
 ------------------
