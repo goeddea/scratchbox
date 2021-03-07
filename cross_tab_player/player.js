@@ -8,12 +8,21 @@ player.src = 'daruma.mp3';
 player.controls = true;
 player.preload = 'auto';
 document.body.appendChild(player);
-const tabID = Math.floor(Math.random() * 100000000000);
+
+const tabID = Math.floor(Math.random() * 1000);
 console.log("tabId", tabID);
 
 // broadcasting
 
 const channel = new BroadcastChannel('player');
+
+channel.postMessage({
+    source: tabID,
+    type: "hello",
+    helloTime: Date.now()
+})
+
+
 
     // basic event broadcasting
 
@@ -35,7 +44,7 @@ var onAudioPlayerEvent  = function(event) {
         broadcastContent.playTime = event.timeStamp;
     };
     
-    console.log(event, broadcastContent);
+    // console.log(event, broadcastContent);
      
 
     channel.postMessage(broadcastContent);
@@ -47,13 +56,40 @@ eventTypes.forEach(eventType => player.addEventListener(eventType, onAudioPlayer
 
 
     // broadcast event handling
+var updateCounter = 0;
+var loadTime = Date.now();
+var timeSinceLoad = 0;
 var onBroadcastEvent = function(event) {
-    console.log('received broadcast event', event);
+    if(event.data.source == tabID) {
+        return;
+    }
+    console.log('received broadcast event', event.data.type);
     switch (event.data.type) {
         case 'timeupdate':
             externalTimeUpdate = true;
-            player.currentTime = event.data.playTime // does not set the (displayed) time
+            updateCounter += 1;
+            timeSinceLoad = Date.now() - loadTime;
+            console.log(updateCounter, timeSinceLoad / 1000);
+            // player.currentTime = event.data.playTime // does not set the (displayed) time
+
+        case 'hello':
+            console.log("received 'hello'", event.data.source)
+            channel.postMessage({
+                source: tabID,
+                type: 'helloBack',
+                target: event.data.source,
+                helloTime: event.data.helloTime,
+                helloBackTime: Date.now()
+            })
+        
+        case 'helloBack':
+            if(event.data.target == tabID) {
+                console.log('received "helloBack" from', 
+                    event.data.source, "helloReceive", event.data.helloBackTime - event.data.helloTime, "helloBackReceive", Date.now() - event.data.helloBackTime);
+            }
+            
     }
+
 };
 
 channel.onmessage = onBroadcastEvent;
